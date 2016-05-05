@@ -2,10 +2,10 @@
 1.安装wamp，将项目导到www文件夹下
 
 2.修改bin/apache/apache2.4.9/conf/httpd.conf文件，将
-/#LoadModule rewrite_module modules/mod_rewrite.so
+\#LoadModule rewrite_module modules/mod_rewrite.so
 的#去掉，和
-/# Virtual hosts
-/#Include conf/extra/httpd-vhosts.conf
+\# Virtual hosts
+\#Include conf/extra/httpd-vhosts.conf
 Include前的include去掉
 
 3.修改hosts文件，添加
