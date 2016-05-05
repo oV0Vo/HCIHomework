@@ -1,0 +1,164 @@
+html, div, body, button {
+    font-family: 'Adobe 楷体 Std R', 'Adobe 楷体 Std', "Microsoft YaHei", "微软雅黑", sans-serif;
+    color: #222;
+    /* box-sizing: border-box; */
+}
+
+body {
+    width: 1366px;
+    margin: 0;
+    background-position-y: 100px;
+    background-image: url(../image/indexBackground.jpg);
+    background-repeat: no-repeat;
+}
+
+header {
+    background-color: white;
+}
+
+#head-bar {
+    padding: 12px 0px;
+}
+
+#head-icon {
+    width: 250px;
+    text-align: center;
+    display: inline-block;
+}
+
+.search-container {
+    display: inline-block;
+}
+
+#search-input {
+    border: none;
+    border: solid 1px #D7D7D7;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    width: 600px;
+    font-family: 'Adobe 楷体 Std R', 'Adobe 楷体 Std', "Microsoft YaHei", "微软雅黑", sans-serif;
+    font-size: 15px;
+    width: 580px;
+}
+
+.search-container:after {
+    clear: both;
+}
+
+#main-menu,
+#main-menu ul {
+    background: #66FF99;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#main-menu li {
+    text-align: center;
+}
+
+#main-menu > li {
+    float: left;
+    position: relative;
+}
+
+#main-menu li a {
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+    font-weight: 500;
+    font-family: "楷体", "楷体_GB2312", sans-serif;
+    display: inline-block;
+    width: 150px;
+    padding: 12px 0;
+}
+
+#setting {
+    display: inline-block;
+    margin-right:50px;
+    padding: 0 10px;
+    width: 100px;
+    float: right;
+}
+
+#setting ul {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0px 2px 8px 1px rgba(0, 0, 0, 0.2);
+    list-style: none;
+    padding: 5px;
+    margin: 0px 0px 0px -30px;
+}
+
+#setting li {
+    font-size: 15px;
+    padding: 5px;
+    margin: 0px;
+}
+
+#setting li a {
+    color: black;
+}
+
+#main-menu ul {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+    top: 47px;
+    padding: 5px 0px;
+    transition: opacity 0.5s ease-in-out;
+}
+
+#setting:hover ul {
+    display: block;
+}
+
+#main-menu > li:hover ul {
+    left: 0px;
+    opacity: 1;
+}
+
+#main-menu > li:hover {
+    background-color: #66FF66;
+}
+
+#main-menu ul li a {
+    font-size: 17px;
+    padding: 5px 0px;
+}
+
+#main-menu:after {
+    visibility: hidden;
+    display: block;
+    content: " ";
+    clear: both;
+}
+
+#content-container {
+    margin: 0 auto;
+    width: 1066px;
+    height: 770px;
+    background-color: white;
+}
+
+#main-content-container {
+    padding-left: 25px;
+    float: left;
+}
+
+#hot-content-container {
+    width: 250px;
+    height: 770px;
+    float: right;
+    border: solid 1px #aaa;
+    border-radius: 5px;
+    padding-left: 20px;
+}
+
+.showMore {
+    float: right;
+    margin-bottom: 10px;
+}
+

@@ -1,0 +1,15 @@
+.signInForm {
+    margin:0 auto;
+    padding-top:100px;
+    width:300px;
+    height: 300px;
+    vertical-align: middle;
+}
+
+#signInTitle {
+    margin: 0 auto;
+    font-size:24px;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom:20px;
+}

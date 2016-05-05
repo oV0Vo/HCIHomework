@@ -1,0 +1,10 @@
+.adviceAuthor {
+    float:right;
+}
+
+.subContent:before{
+    visibility: hidden;
+    content: " ";
+    clear: both;
+    display: block;
+}

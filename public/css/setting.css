@@ -1,0 +1,88 @@
+#mainContent {
+    margin:40px 0px 0px 65px;
+    width:890px;
+    height:540px;
+}
+
+#navList {
+    width:160px;
+    height:540px;
+    margin-right:10px;
+    float:left;
+    background-color: #FFFFCC;
+}
+
+#userBigAvatar {
+    width:160px;
+    height:160px;
+}
+
+#navContentList {
+    margin:10px;
+}
+
+#navContentList li a {
+    display: inline-block;
+    font-size:17px;
+    font-weight: 600;
+    color: #666;
+    margin:3px 0;
+    width:100%;
+}
+
+#detailContainer {
+    width:720px;
+    height:540px;
+    float:left;
+    background-color: #EEFFFF;
+}
+
+#detailContent {
+    margin:50px 0px 50px 50px ;
+}
+
+.detailItem {
+    margin:0px 0px 10px;
+}
+
+#editContainer {
+    margin:0px auto;
+    text-align: center;
+}
+
+.editButton {
+    border-radius: 10px;
+    background-color: #ACFFE6;
+    width:80px;
+}
+
+#edit {
+    margin-right:10px;
+}
+
+#cancel {
+    margin-left:10px;
+    display: none;
+}
+
+.settingInput {
+    border:none;
+    font-family: 'Adobe 楷体 Std R', 'Adobe 楷体 Std', "Microsoft YaHei", "微软雅黑", sans-serif;
+    font-size:16px;
+    background-color: #EEFFFF;
+}
+
+#signatureTitle {
+    vertical-align: top;
+}
+
+#signature {
+    width:520px;
+    height:100px;
+    margin:0px;
+    padding:0px;
+    border:none;
+    font-family: 'Adobe 楷体 Std R', 'Adobe 楷体 Std', "Microsoft YaHei", "微软雅黑", sans-serif;
+    font-size:16px;
+    background-color: #EEFFFF;
+}

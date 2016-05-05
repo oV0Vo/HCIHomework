@@ -1,0 +1,98 @@
+#mainContainer {
+    margin-left:215px;
+    margin-top:80px;
+}
+
+.pageSelectContainer {
+    margin:0 auto;
+    text-align: center;
+    margin-top:15px;
+}
+
+#userList {
+    list-style: none;
+    padding:10px 20px;
+    width:570px;
+    height:400px;
+    border:solid 1px #D7D7D7;
+    -webkit-border-radius:15px;
+    -moz-border-radius:15px;
+    border-radius:15px;
+}
+
+.userInfoContainer {
+    margin:0px;
+    padding:0px;
+    margin-left:20px;
+    display: inline-block;
+    width: 480px;
+}
+
+.userInfoItem {
+    margin:10px 0;
+}
+
+.userInfoContainer:after {
+    visibility:hidden;
+    content:" ";
+    display: block;
+    clear: both;
+}
+
+.userDelete {
+    display:inline-block;
+    width:100px;
+    height:30px;
+    background-color: white;
+    color:black;
+    text-align: center;
+    border:solid 1px #aaa;
+    border-radius: 10px;
+    font-family:'Adobe 楷体 Std R', 'Adobe 楷体 Std', "Microsoft YaHei", "微软雅黑", sans-serif;
+    float:right;
+}
+
+.userEdit {
+    display:inline-block;
+    width:100px;
+    height:30px;
+    background-color: white;
+    color:black;
+    text-align: center;
+    border:solid 1px #aaa;
+    border-radius: 10px;
+    font-family:'Adobe 楷体 Std R', 'Adobe 楷体 Std', "Microsoft YaHei", "微软雅黑", sans-serif;
+    float:right;
+}
+
+.editCancel {
+    display:inline-block;
+    width:100px;
+    height:30px;
+    background-color: white;
+    color:black;
+    text-align: center;
+    border:solid 1px #aaa;
+    border-radius: 10px;
+    font-family:'Adobe 楷体 Std R', 'Adobe 楷体 Std', "Microsoft YaHei", "微软雅黑", sans-serif;
+    float:right;
+    visibility: hidden;
+    margin-right:10px;
+}
+
+.pSelect {
+    display:inline-block;
+    width:100px;
+    height:30px;
+    background-color: white;
+    color:black;
+    text-align: center;
+    border:solid 1px #aaa;
+    border-radius: 10px;
+    visibility: hidden;
+    font-family:'Adobe 楷体 Std R', 'Adobe 楷体 Std', "Microsoft YaHei", "微软雅黑", sans-serif;
+}
+
+.userAvatar {
+    vertical-align: top;
+}

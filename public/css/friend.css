@@ -1,0 +1,115 @@
+#briefContainer {
+    float:left;
+    width:210px;
+    margin-right:15px;
+}
+
+#friendListTitle {
+    font-size:19px;
+    font-weight:800;
+    padding:0px;
+    margin:0px;
+    border-bottom:solid 2px #999;
+}
+
+#friendManage {
+    margin-top:15px;
+    margin-bottom:5px;
+    margin-left:265px;
+}
+
+#friendManage a {
+    display: inline-block;
+}
+
+#userDetail {
+    background-color: #EEFFFF;
+    width:730px;
+    height:550px;
+    margin:0;
+    margin-bottom:20px;
+    padding:0 30px;
+    padding-top:30px;
+    float:left;
+}
+
+#userDetailName {
+    font-size:19px;
+    font-weight:800;
+}
+
+#sportContainer {
+    margin:10px 0;
+}
+
+#userSignature {
+    margin:10px 0;
+}
+
+#userSexImg {
+    margin:0 5px;
+}
+#userBigAvatar {
+    float:right;
+    width:150px;
+    height:150px;
+}
+
+#sportInvite {
+    margin-top:50px;
+}
+
+#userSports {
+    display:inline-block;
+}
+
+.friendList {
+    list-style:none;
+    margin:0px;
+    padding:10px 0px;
+}
+
+.userBrief a{
+    display: inline-block;
+    padding:5px 0;
+    margin-left:10px;
+}
+
+.nickname_brief {
+    color:black;
+}
+
+.avatarSmall {
+    width:36px;
+    height:36px;
+    vertical-align: top;
+}
+
+#commentText {
+    margin-top:10px;
+    margin-left:10px;
+    width:100%;
+    height:100px;
+    font-family:'Adobe 楷体 Std R', 'Adobe 楷体 Std', "Microsoft YaHei", "微软雅黑", sans-serif;
+    font-size:14px;
+}
+
+#submitContainer {
+    margin:0;
+}
+
+#commentSummit {
+    float:right;
+}
+
+#commentForm {
+    width:520px;
+}
+
+#commentForm:after {
+    visibility: hidden;
+    content: " ";
+    display: block;
+    clear: both;
+}
+

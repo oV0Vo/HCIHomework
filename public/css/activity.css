@@ -1,0 +1,81 @@
+.selectContainer {
+    margin-bottom:5px;
+}
+
+
+#selectResultList {
+    padding:0 30px;
+    border:solid 1px #D7D7D7;
+    border-radius: 15px;
+    width:680px;
+}
+
+.lastColumn {
+    padding-left:50px;
+}
+
+.activityContent {
+    padding-top: 15px;
+    padding-bottom: 10px;
+    border-bottom: solid 1px #D7D7D7;
+}
+
+.activityContent:after {
+    visibility: hidden;
+    content: " ";
+    display: block;
+
+}
+
+#activityPublishContainer {
+    width:680px;
+    height:170px;
+    padding:5px 10px;
+}
+
+
+
+#actContentInput {
+    width:570px;
+    height:80px;
+    background-color: #F2F2F2;
+    border:none;
+    font-family:'Adobe 楷体 Std R', 'Adobe 楷体 Std', "Microsoft YaHei", "微软雅黑", sans-serif;
+    font-size:14px;
+    margin-top:5px;
+}
+
+#actSubmit {
+    float:right;
+    margin-right:30px;
+}
+
+#actPublish:after {
+    visibility:hidden;
+    content:" ";
+    display: block;
+    clear: both;
+}
+
+#actPlace {
+    width:225px;
+}
+
+.actDelete {
+    display:inline-block;
+    width:100px;
+    height:30px;
+    background-color: white;
+    color:black;
+    text-align: center;
+    border:solid 1px #aaa;
+    border-radius: 10px;
+    font-family:'Adobe 楷体 Std R', 'Adobe 楷体 Std', "Microsoft YaHei", "微软雅黑", sans-serif;
+    float:right;
+}
+
+.actJoin {
+    float:right;
+}
+
+

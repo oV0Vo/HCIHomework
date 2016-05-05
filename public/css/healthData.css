@@ -1,0 +1,32 @@
+#healthDataStatus {
+    width:580px;
+    height:300px;
+    margin-top:15px;
+    margin-left:30px;
+    border:solid 1px #333;
+    text-align: center;
+}
+
+#dataTable {
+    margin-top:10px;
+    border-collapse:collapse;
+    border:none;
+}
+
+#dataTable th{
+    border:solid 1px #797979;
+    width:110px;
+    height:30px;
+    text-align: center;
+}
+
+#dataTable td {
+    border:solid 1px #797979;
+    width:110px;
+    height:30px;
+    text-align: center;
+}
+
+.healthData {
+    color:blue;
+}
