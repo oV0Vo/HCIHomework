@@ -1,0 +1,187 @@
+create database health_web default character set utf8;
+use health_web;
+
+create table run_data(
+	id int not null auto_increment,
+	startTime time not null,
+	duration int not null,
+	steps int not null,
+	distance int not null,
+	steps_goal int not null default -1,
+	distance_goal int not null default -1,
+	calories_goal int not null default -1,
+	name varchar(18) not null default '',
+	primary key(id));
+	
+create table walk_data(
+	id int not null auto_increment,
+	startTime time not null,
+	duration int not null,
+	steps int not null,
+	distance int not null,
+	steps_goal int not null default -1,
+	distance_goal int not null default -1,
+	calories_goal int not null default -1,
+	name varchar(18) not null default '',
+	primary key(id));
+
+create table date_record(
+	userId int not null,
+	recordDate date not null,
+	walkDataId int,
+	runDataId int,
+	sleepDataId int,
+	heartRateId int,
+	bloodPressureId int,
+	primary key(userId, recordDate));
+	
+create table sleep_data(
+	id int not null auto_increment,
+	startTime time not null,
+	duration int not null,
+	primary key(id));
+
+create table heartRate(
+	id int not null auto_increment,
+	recordTime time not null,
+	rate int not null,
+	primary key(id));
+	
+create table bloodPressure(
+	id int not null auto_increment,
+	recordTime time not null,
+	low float not null,
+	high float not null,
+	primary key(id));
+	
+create table sportplan(
+	userId int not null,
+	createTime timestamp not null default current_timestamp,
+	slogan varchar(50) not null,
+	beginDate date not null,
+	endDate date not null,
+	planMinute int not null,
+	primary key(userId, createTime));
+	 
+create table user(
+	id int not null auto_increment,
+	role tinyint not null comment '1:个人用户, 2:教练, 3:医生, 0:管理员',
+	sex tinyint not null,
+	city varchar(20),
+	city_crc int unsigned,
+	avatar varchar(255),
+	nickname char(12) not null comment '需要进行搜索优化',
+	realName char(12) not null,
+	signature varchar(80) not null default '',
+	primary key (id),
+	key id_ni_av(id, nickname, avatar));
+	
+create trigger u_city_crc_inc before insert on user for each row set New.city_crc = crc32(New.city);
+create trigger u_city_crc_upd before update on user for each row set New.city_crc = crc32(New.city);
+
+create table usersport(
+	userId int not null primary key, 
+	sportType int not null);
+
+create table account(
+	userId int not null,
+	account varchar(30) not null,
+	password char(32) not null,
+	primary key(userId));
+	
+create table advice(
+	receiverId int not null,
+	advisorId int not null,
+	adviseTime timestamp not null,
+	content varchar(512) not null,
+	primary key(receiverId, advisorId, adviseTime));
+
+create table customer_teacher(
+	userId int not null,
+	teacherId int not null,
+	key user_teac(userId, teacherId),
+	key teac_user(teacherId, userId));
+	
+create table friend(
+	userId int not null,
+	friendId int not null,
+	key key1(userId, friendId));
+	
+create table friendComment(
+	receiverId int not null,
+	senderId int not null,
+	createTime timestamp not null default current_timestamp,
+	content varchar(256) not null,
+	primary key(receiverId, senderId));
+	
+create table teacher_ad(
+	id int not null auto_increment,
+	authorId int not null,
+	city varchar(20) not null,
+	city_crc int unsigned not null,
+	createTime timestamp not null default current_timestamp,
+	content varchar(512) not null,
+	deleteFlag tinyint not null default 0,
+	primary key(id),
+	key authorId_id(authorId, id),
+	key city_crc_id(city_crc, id));
+
+create trigger ta_city_crc_inc before insert on teacher_ad for each row set New.city_crc = crc32(New.city);
+
+create table shuoshuo(
+	id int not null auto_increment,
+	authorId int not null,
+	createTime timestamp not null default current_timestamp,
+	content varchar(255) not null,
+	praiseNum int not null default 0,
+	commentNum int not null default 0,
+	primary key(id));
+	
+create table shuoshuoComment(
+	id int not null auto_increment,
+	replyToId int not null,
+	authorId int not null,
+	content varchar(255) not null,
+	primary key(id),
+	key shuoId_id(replyToId, id));
+
+create table shuoshuoPraise(
+	shuoshuoId int not null,
+	praisorId int not null,
+	key key1(shuoshuoId, praisorId),
+	key key2(praisorId, shuoshuoId));
+	
+create table activity(
+	id int not null auto_increment,
+	title varchar(18) not null,
+	createTime timestamp not null default current_timestamp,
+	beginDate date not null,
+	beginTime time not null,
+	endDate date not null,
+	endTime time not null,
+	authorId int not null,
+	city varchar(20) not null,
+	city_crc int unsigned not null,
+	type int not null comment '0:漫步，1:跑步，2:其他',
+	place varchar(50) not null,
+	joinNum int not null default 0,
+	content varchar(512) not null,
+	primary key(id),
+	key cityCrc_id(city_crc, id),
+	key type_id(type, id),
+	key date_id(beginDate, endDate, id),
+	key author_id(authorId, id),
+	key joinNum_endDate_title_id(joinNum, endDate, title, id),
+	key createTime_endDate_title_id(createTime, endDate, title, id));
+	
+create table activity_join(
+	userId int not null,
+	activityId int not null,
+	key user_acty(userId, activityId),
+	key acty_user(activityId, userId));
+	
+create trigger a_city_crc_inc before insert on activity for each row set New.city_crc = crc32(New.city);
+
+
+
+
