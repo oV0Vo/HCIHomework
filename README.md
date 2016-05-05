@@ -14,3 +14,8 @@ Include前的include去掉
 4.使用sql.txt脚本文件建立数据库
 
 5.进入http://www.health.com/index ,如果成功的话会显示首页的
+
+项目结构：
+  app文件夹下是代码，app\Http\routes.php是导航，app\Http\Controllers下控制器文件，app\Model下是Model文件，resources\views下是视图文件，
+  public下有css、js、image等文件夹
+关于lavarel的教程见http://www.golaravel.com/
