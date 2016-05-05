@@ -8,7 +8,7 @@
 \#Include conf/extra/httpd-vhosts.conf
 Include前的include去掉
 
-3.修改\bin\apache\apache2.4.9\conf\extra\httpd-vhosts.conf文件，添加<br/>
+3.修改\bin\apache\apache2.4.9\conf\extra\httpd-vhosts.conf文件，添加 <br/>
 <VirtualHost *:80> <br/>
     ServerAdmin qwe97886@qq.com<br/>
     DocumentRoot "D:/wamp/www/healthweb/public"<br/>
