@@ -19,3 +19,5 @@ Include前的include去掉
   app文件夹下是代码，app\Http\routes.php是导航，app\Http\Controllers下控制器文件，app\Model下是Model文件，resources\views下是视图文件，
   public下有css、js、image等文件夹
 关于lavarel的教程见http://www.golaravel.com/
+
+项目有点赶，很多方法都是空的，有坑一起填哈:)
