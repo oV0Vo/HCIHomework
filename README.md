@@ -8,6 +8,15 @@
 \#Include conf/extra/httpd-vhosts.conf
 Include前的include去掉
 
+3.修改\bin\apache\apache2.4.9\conf\extra\httpd-vhosts.conf文件，添加<br/>
+<VirtualHost *:80>
+    ServerAdmin qwe97886@qq.com
+    DocumentRoot "D:/wamp/www/healthweb/public"
+    ServerName www.healthweb.com
+    ErrorLog "logs/www.health.com-error.log"
+    CustomLog "logs/www.health.com-access.log" common
+</VirtualHost>
+
 3.修改hosts文件，添加
 127.0.0.1 www.health.com
 
