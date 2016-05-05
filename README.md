@@ -13,4 +13,4 @@ Include前的include去掉
 
 4.使用sql.txt脚本文件建立数据库
 
-5.进入http://www.health.com/index，如果成功的话会显示首页的
+5.进入http://www.health.com/index ,如果成功的话会显示首页的
