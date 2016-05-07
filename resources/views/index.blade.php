@@ -8,6 +8,8 @@
                    placeholder=" 用户名"/>
             <input class="normalInput" type="text" name="account" id="account" maxlength="16"
                    placeholder=" 账号"/>
+            <input class="normalInput" type="text" name="city" id="city" maxlength="18"
+                   placeholder=" 城市"/>
             <input class="normalInput" type="password" name="password" id="password" maxlength="18"
                    placeholder=" 密码"/>
             <div id="inputHint">一起记录分享运动，享受高品质生活</div>
