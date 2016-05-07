@@ -20,8 +20,8 @@ class UserModelImpl implements UserModel
 	public function  getUserById($id)
 	{
 		$user = DB::select('SELECT id, avatar, nickname, sex, city, signature, role
-							FROM user AND role != 0
-							WHERE id = ?;', [$id]);
+							FROM user
+							WHERE id = ? AND role != 0;', [$id]);
 		return $user;
 	}
 
