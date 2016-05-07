@@ -27,7 +27,7 @@ class UserModelImpl implements UserModel
 
 	public function addUser($account, $password, $nickname, $city, $role, $sex,
 		array $sports)
-	{
+	{	
 		if($city) {
 			DB::insert("INSERT INTO user(role, sex, city, city_crc, nickname) values(?, ?, ?, CRC32(?), ?);"
 				, [$role, $sex, $city, $city, $nickname]);

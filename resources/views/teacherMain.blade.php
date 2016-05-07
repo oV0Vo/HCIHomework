@@ -47,14 +47,6 @@
             <li><a href="../friend">我的朋友</a></li>
 
             <li>
-                <a href="javascript:void(0);">朋友圈</a>
-                <ul>
-                    <li><a href="javascript:alert('新功能正在研制当中~');">运动排名</a></li>
-                    <li><a href="javascript:alert('新功能正在研制当中~');">说说</a></li>
-                </ul>
-            </li>
-
-            <li>
                 <a href="javascript:void(0);">健身活动</a>
                 <ul>
                     <li><a href="../activity">查看活动</a></li>
