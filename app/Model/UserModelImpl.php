@@ -20,14 +20,14 @@ class UserModelImpl implements UserModel
 	public function  getUserById($id)
 	{
 		$user = DB::select('SELECT id, avatar, nickname, sex, city, signature, role
-							FROM user AND role != 0
-							WHERE id = ?;', [$id]);
+							FROM user
+							WHERE id = ? AND role != 0;', [$id]);
 		return $user;
 	}
 
 	public function addUser($account, $password, $nickname, $city, $role, $sex,
 		array $sports)
-	{
+	{	
 		if($city) {
 			DB::insert("INSERT INTO user(role, sex, city, city_crc, nickname) values(?, ?, ?, CRC32(?), ?);"
 				, [$role, $sex, $city, $city, $nickname]);

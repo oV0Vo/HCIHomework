@@ -1,0 +1,1 @@
+mysqldump -u root health_web < health_web.db

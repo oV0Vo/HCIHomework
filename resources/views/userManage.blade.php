@@ -13,7 +13,7 @@
                 搜索用户
             </div>
             <input id="keyInput" type="text" name="key" placeholder=" 输入关键字"/>
-            <input id="searchType" hidden="hidden" name="pageType" value="0"/>
+            <input id="searchType" hidden="hidden" name="type" value="0"/>
             <a id="submit" class="searchButton" type="submit" href="javascript:void(0);">搜索</a>
         </form>
     </div>
