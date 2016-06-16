@@ -113,9 +113,11 @@ class UserController extends Controller
         $account = $request['account'];
         $password = $request['password'];
         if ($account && $password) {
-            $id = $this->model->getUserId($account, $password);
-            if (!is_null($id)) {
-                Session::put('userId', $id);
+            $userInfo = $this->model->getUserLoginInfo($account, $password);
+            if ($userInfo) {
+                Session::put('uid', $userInfo->userId);
+				Session::put('nickname', $userInfo->nickname);
+				Session::put('avatar', $userInfo->avatar);
                 return 'true';
             } else {
                 return 'false';
@@ -202,4 +204,8 @@ class UserController extends Controller
             return $updateSuccess ? "true" : "false";
         }
     }
+	
+	public function test(Request $request) {
+		return view('newMain');
+	}
 }

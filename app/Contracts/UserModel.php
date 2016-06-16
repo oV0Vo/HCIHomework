@@ -30,4 +30,6 @@ interface UserModel
 	public function getUserId($account, $password);
 
 	public function getRoleAndCity($id);
+	
+	public function getUserLoginInfo($account, $password);
 }

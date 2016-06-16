@@ -1,5 +1,5 @@
 html, div, body, button {
-    font-family: 'Adobe æ¥·ä½“ Std R', 'Adobe æ¥·ä½“ Std', "Microsoft YaHei", "å¾®è½¯é›…é»‘", sans-serif;
+    font-family: 'Adobe ¿¬Ìå Std R', 'Adobe ¿¬Ìå Std', "Microsoft YaHei", "Î¢ÈíÑÅºÚ", sans-serif;
     color: #222;
     /* box-sizing: border-box; */
 }
@@ -26,13 +26,6 @@ header {
     display: inline-block;
 }
 
-.header-nav {
-	font-size: 20px;
-	padding: 0px 12px;
-	font-weight: bold;
-	display:inline-block;
-}
-
 .search-container {
     display: inline-block;
 }
@@ -44,7 +37,7 @@ header {
     -moz-border-radius: 5px;
     border-radius: 5px;
     width: 600px;
-    font-family: 'Adobe æ¥·ä½“ Std R', 'Adobe æ¥·ä½“ Std', "Microsoft YaHei", "å¾®è½¯é›…é»‘", sans-serif;
+    font-family: 'Adobe ¿¬Ìå Std R', 'Adobe ¿¬Ìå Std', "Microsoft YaHei", "Î¢ÈíÑÅºÚ", sans-serif;
     font-size: 15px;
     width: 580px;
 }
@@ -75,15 +68,10 @@ header {
     color: black;
     font-size: 20px;
     font-weight: 500;
-    font-family: "æ¥·ä½“", "æ¥·ä½“_GB2312", sans-serif;
+    font-family: "¿¬Ìå", "¿¬Ìå_GB2312", sans-serif;
     display: inline-block;
     width: 150px;
     padding: 12px 0;
-}
-
-.Absolute-Center {
-  margin: 0 auto;
-  background-color:#123
 }
 
 #setting {
@@ -156,18 +144,8 @@ header {
 }
 
 #main-content-container {
-	width:68%;
     padding-left: 25px;
     float: left;
-}
-
-#hot-content-container {
-    width: 25%;
-	height: 100%;
-    float: right;
-    border: solid 1px #aaa;
-    border-radius: 5px;
-    padding-left: 20px;
 }
 
 .showMore {

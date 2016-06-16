@@ -25,4 +25,6 @@ interface ActivityModel
 	public function getUserJoinByPage($userId, $page);
 	
 	public function deleteActivtiy($activityId);
+
+	public function getHotActivity($page, $uid);
 }

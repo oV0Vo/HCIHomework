@@ -105,4 +105,41 @@ class ActivityModelImpl implements ActivityModel
 		DB::delete("DELETE FROM activity_join WHERE activityId = ?", [$activityId]);
 		return count($effectRows) > 0? true: false;
 	}
+	
+	public function getHotActivity($page, $uid)
+	{
+		$activitys = array();
+		$joinFriends = array();
+		$prefetchPage = $page < 5? 10 - $page: 5;
+		$prefetchNum = ($page + $prefetchPage) * 10 + 1;
+		if($uid) {
+			$activitys = DB::select("SELECT id, beginTime, duration, title, content,
+								 joinNum, maxJoinNum, !ISNULL(activity_join.userId) hasJoin
+								 FROM activity 
+									  LEFT JOIN activity_join ON(activity.id = activity_join.activityId)
+								 WHERE beginTime + duration > current_timestamp() AND activity_join.userId = ? 
+								 ORDER BY joinNum DESC LIMIT ?, ?", [$uid, $page * 10, $prefetchNum]);
+		} else {
+			$activitys = DB::select("SELECT id, beginTime, duration, title, content, 
+								 joinNum, maxJoinNum, FALSE 
+								 FROM activity 
+								 WHERE beginTime + duration > current_timestamp() 
+								 ORDER BY joinNum DESC LIMIT ?, ?", [$page * 10, $prefetchNum]);
+		}
+	
+		$actCount = count($activitys);
+		if ($uid) {
+			for ($i=0; $i < $actCount; ++$i)
+				$joinFriends[$i] = DB::select("SELECT id, avatar, nickname 
+											   FROM activity_join LEFT JOIN user 
+													ON (activity_join.userId = user.id) 
+											   WHERE activity_join.activityId = ? 
+											   AND activity_join.userId <> ?", 
+											   [$activitys[$i]->id, $uid]);
+		}
+		
+		$leftPage = ($actCount - 1)/ 10;
+		
+		return array("activitys" => $activitys, "joinFriends" => $joinFriends, "leftPage" => $leftPage);
+	}
 }

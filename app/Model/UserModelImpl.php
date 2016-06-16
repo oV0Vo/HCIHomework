@@ -17,7 +17,7 @@ class UserModelImpl implements UserModel
 		return $users;
 	}
 
-	public function  getUserById($id)
+	public function getUserById($id)
 	{
 		$user = DB::select('SELECT id, avatar, nickname, sex, city, signature, role
 							FROM user
@@ -111,6 +111,17 @@ class UserModelImpl implements UserModel
 		} else {
 			return null;
 		}
+	}
+	
+	public function getUserLoginInfo($account, $password) 
+	{
+		$info = DB::select("SELECT userId, nickname, avatar FROM account LEFT JOIN user ON 
+							(account.userId = user.id) WHERE account = ? AND password=MD5(?)", 
+							[$account, $password]);
+		if (count($info) !=0)
+			return $info[0];
+		else
+			return null;
 	}
 
 }

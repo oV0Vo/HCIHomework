@@ -8,13 +8,15 @@ use DB;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Contracts\ActivityModel;
 use App\Contracts\FriendModel;
 
 class TestController extends Controller
 {
 
-	public function __construct()
+	public function __construct(ActivityModel $model)
 	{
+		$this->model = $model;
 	}
 
 	/**
@@ -24,7 +26,7 @@ class TestController extends Controller
 	 */
 	public function getIndex()
 	{
-
-		return view('test');
+		return $this->model->getHotActivity(0, 1);
 	}
+	
 }

@@ -4,7 +4,7 @@
        <title>@yield('title')</title>
        <link rel="shortcut icon" type="image/x-icon" href={{URL::asset('image/favicon.ico')}}>
        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-       <link href="{{ URL::asset('css/main.css')}}" type="text/css" rel="stylesheet"/>
+       <link href="{{ URL::asset('css/main2.css')}}" type="text/css" rel="stylesheet"/>
        <link href="{{ URL::asset('css/util.css')}}" type="text/css" rel="stylesheet"/>
        <script src="{{ URL::asset('js/jquery.js')}}" type="text/javascript"></script>
        @section('childCss')

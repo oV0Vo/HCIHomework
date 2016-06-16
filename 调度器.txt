@@ -1,0 +1,6 @@
+CREATE EVENT hot_activity_query
+ON SCHEDULE EVERY 5 MINUTE
+DO INSERT INTO activity_join_num
+	SELECT activityId actId, count(*) joinNum FROM activity_join 
+	GROUP BY activityId 
+	ON DUPLICATE KEY UPDATE joinNum=VALUES(joinNum); 
