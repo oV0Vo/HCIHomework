@@ -143,12 +143,18 @@ class ActivityModelImpl implements ActivityModel
 		return array("activitys" => $activitys, "joinFriends" => $joinFriends, "leftPage" => $leftPage);
 	}
 	
-	public function search($key, $place, $orderType) 
+	public function search($key, $city, $orderType, $asc) 
 	{
+		$order = $orderType == 0? 'beginTime': 'joinNum';
+		$order = $asc? $order.' ASC' : $order.' DESC';
 		$activitys = DB::select("SELECT id, beginTime, duration, title, content, 
 									    joinNum, maxJoinNum, !ISNULL(activity_join.userId) hasJoin 
 								 FROM activity 
-								 	  LEFT JOIN activity_join ON(activity.id = activity_join.activityId)
-								 WHERE ");
+								 	  LEFT JOIN activity_join ON(activity.id = activity_join.activityId) 
+								 WHERE city_crc = crc32(?) AND (title like '?' OR content like '?') 
+									   AND beginTime + duration > current_timestamp() 
+								 ORDER BY ?;", [$city, '%'.$key.'%', '%'.$key.'%', 
+								 $order]);
+		return $activitys;
 	}
 }

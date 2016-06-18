@@ -26,7 +26,7 @@ class TestController extends Controller
 	 */
 	public function getIndex()
 	{
-		return view('newMain');
+		return $this->model->search('哈哈', '南京', 0, true);
 	}
 	
 }

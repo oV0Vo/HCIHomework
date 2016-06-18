@@ -27,4 +27,6 @@ interface ActivityModel
 	public function deleteActivtiy($activityId);
 
 	public function getHotActivity($page, $uid);
+	
+	public function search($key, $city, $orderType, $asc);
 }
