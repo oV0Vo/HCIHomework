@@ -32,4 +32,6 @@ interface ActivityModel
 	
 	public function cancelAttend($userId, $activityId);
 
+	public function getDetail($activityId, $uid);
+
 }

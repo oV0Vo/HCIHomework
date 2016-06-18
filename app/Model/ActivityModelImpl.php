@@ -141,7 +141,8 @@ class ActivityModelImpl implements ActivityModel
 											   FROM activity_join LEFT JOIN user 
 													ON (activity_join.userId = user.id) 
 											   WHERE activity_join.activityId = ? 
-											   AND activity_join.userId <> ?", 
+											   AND activity_join.userId <> ? 
+											   LIMIT 0, 10", 
 											   [$activitys[$i]->id, $uid]);
 		}
 		
@@ -163,5 +164,46 @@ class ActivityModelImpl implements ActivityModel
 								 ORDER BY ?;", [$city, '%'.$key.'%', '%'.$key.'%', 
 								 $order]);
 		return $activitys;
+	}
+
+	public function getDetail($activityId, $uid) 
+	{
+		if($uid) {
+			$activitys = DB::select("SELECT id, authorId, user.nickname authorName, user.avatar authorAvatar, 
+											beginTime, duration, title, content, city, place, 
+											joinNum, maxJoinNum, !ISNULL(activity_join.userId) hasJoin
+									 FROM activity 
+										LEFT JOIN activity_join ON(activity.id = activity_join.activityId) 
+										LEFT JOIN user ON(activity.authorId = user.id) 
+									 WHERE activity.id = ? AND activity_join.userId = ? 
+									 LIMIT 0, 1", [$activityId, $uid]);
+		} else {
+			$activitys = DB::select("SELECT id, authorId, user.nickname authorName, user.avatar authorAvatar, 
+											beginTime, duration, title, content, city, place, 
+											joinNum, maxJoinNum, false hasJoin
+									 FROM activity 
+										LEFT JOIN activity_join ON(activity.id = activity_join.activityId) 
+										LEFT JOIN user ON(activity.authorId = user.id) 
+									 WHERE activity.id = ? 
+									 LIMIT 0, 1", [$activityId]);
+		}
+	
+		$actCount = count($activitys);
+		$activity;
+		$joinFriends;
+		if ($actCount != 0) {
+			$activity = $activitys[0];
+			if ($uid) {
+				$joinFriends = DB::select("SELECT id, avatar, nickname 
+											   FROM activity_join LEFT JOIN user 
+													ON (activity_join.userId = user.id) 
+											   WHERE activity_join.activityId = ? 
+											   AND activity_join.userId <> ? 
+											   LIMIT 0, 10", 
+											   [$activity->id, $uid]);
+			}
+		}
+		
+		return array("activity" => $activity, "joinFriends" => $joinFriends);
 	}
 }
