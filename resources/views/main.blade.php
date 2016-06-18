@@ -13,6 +13,7 @@
 </head>
 <body>
 <header>
+div
     <div id="head-bar">
         <a href="../index" id="head-icon">
             <img src="../image/head.png"/>

@@ -89,3 +89,6 @@ Route::get('signUp', 'UserController@signUp');
 Route::get('signUp/redirect', 'UserController@signUpRedirect');
 
 Route::get('test', 'TestController@getIndex');
+Route::get('logout', 'UserController@exitLogin');
+Route::get('userCenter/info', 'UserController@userCenter');
+Route::get('userCenter/modifyPassword', 'UserController@webModifyPassword');

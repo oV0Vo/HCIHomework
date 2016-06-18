@@ -1,0 +1,13 @@
+.contentPanel {
+	display:inline-block;
+	float:left;
+	margin:0px 40px;
+}
+
+#userCenterNav {
+	float:left;
+}
+
+#editContainer {
+	margin:0 auto;
+}

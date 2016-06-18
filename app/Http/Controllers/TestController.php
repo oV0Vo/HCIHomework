@@ -26,7 +26,7 @@ class TestController extends Controller
 	 */
 	public function getIndex()
 	{
-		return $this->model->getHotActivity(0, 1);
+		return view('newMain');
 	}
 	
 }

@@ -7,9 +7,6 @@ html, div, body, button {
 body {
     width: 100%;
     margin: 0;
-    background-position-y: 100px;
-    background-image: url(../image/indexBackground.jpg);
-    background-repeat: no-repeat;
 }
 
 header {

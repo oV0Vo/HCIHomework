@@ -189,7 +189,9 @@ class UserController extends Controller
 
     public function exitLogin(Request $request)
     {
-        Session::forget('userId');
+        Session::forget('uid');
+        Session::forget('nickname');
+        Session::forget('avatar');
         return view('login');
     }
 
@@ -204,6 +206,20 @@ class UserController extends Controller
             return $updateSuccess ? "true" : "false";
         }
     }
+	
+	public function userCenter(Request $reqeust)
+	{
+		// TODO:uid
+		$uid = 1;//Session::get('uid');
+		$user = $this->model->getUserDetail($uid)[0];
+		$datas['user'] = $user;
+        return view('userInfo', $datas);
+	}
+	
+	public function webModifyPassword() 
+	{
+		return view('modifyPassword');
+	}
 	
 	public function test(Request $request) {
 		return view('newMain');
