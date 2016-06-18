@@ -10,7 +10,9 @@ interface FriendModel
 	
 	public function getFriendBriefsByPage($userId, $page);
 	
-	public function commentToFriend($content);
+	public function commentToFriend($uid, $friendId, $content);
+	
+	public function getComments($uid, $page);
 	
 	public function getFreindBriefs($userId);
 }

@@ -4,6 +4,9 @@ namespace App\Contracts;
 
 interface UserModel
 {
+	public function passwordEquals($uid, $password);
+	public function modifyPassword($uid, $newPassword);
+	
 	public function searchByNickname($nickname, $page);
 
 	public function getUserById($id);

@@ -26,6 +26,18 @@ class UserController extends Controller
     {
         return view('userManage');
     }
+	
+	public function modifyPassword(Request $request)
+	{
+		$oldPass = $request['oldPass'];
+		$newPass = $request['newPass'];
+		$uid = Session::get('uid');
+		if ($this->model->passwordEquals($uid, $oldPass) {
+			return $this->mdoel->modifyPassword($uid, $newPass);
+		} else {
+			return false;
+		}
+	}
 
     public function search(Request $request)
     {

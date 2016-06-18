@@ -92,3 +92,4 @@ Route::get('test', 'TestController@getIndex');
 Route::get('logout', 'UserController@exitLogin');
 Route::get('userCenter/info', 'UserController@userCenter');
 Route::get('userCenter/modifyPassword', 'UserController@webModifyPassword');
+Route::post('userCenter/modifyPassword', 'UserController@modifyPassword');
