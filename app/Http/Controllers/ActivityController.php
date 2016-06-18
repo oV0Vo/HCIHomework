@@ -140,5 +140,9 @@ class ActivityController extends Controller
 			return $deleteSuccess? "true": "false";
 		}
 	}
-
+	
+	public function getAllCitys(Request $request) 
+	{
+		return $this->model->getAllCitys();
+	}
 }

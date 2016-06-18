@@ -58,6 +58,7 @@ Route::get('activity/join', ['middleware' => 'auth', 'uses' => 'ActivityControll
 Route::get('activity/getUserPublishByPage', ['middleware' => 'auth', 'uses' => 'ActivityController@getUserPublishByPage']);
 Route::get('activity/getUserJoinByPage', ['middleware' => 'auth', 'uses' => 'ActivityController@getUserJoinByPage']);
 Route::get('activity/delete', ['middleware' => 'auth', 'uses' => 'ActivityController@deleteActivity']);
+Route::get('activity/getAllCitys', 'ActivityController@getAllCitys');
 
 Route::get('setting', ['middleware' => 'auth', 'uses' => 'SettingController@getIndex']);
 Route::get('setting/update', ['middleware' => 'auth', 'uses' => 'SettingController@update']);
