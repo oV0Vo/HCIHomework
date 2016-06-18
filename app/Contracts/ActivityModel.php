@@ -29,4 +29,7 @@ interface ActivityModel
 	public function getHotActivity($page, $uid);
 	
 	public function search($key, $city, $orderType, $asc);
+	
+	public function cancelAttend($userId, $activityId);
+
 }

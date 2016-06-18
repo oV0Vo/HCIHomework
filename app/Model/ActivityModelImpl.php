@@ -82,6 +82,13 @@ class ActivityModelImpl implements ActivityModel
 		return count($effectRows) > 0;
 	}
 	
+	public function cancelAttend($userId, $activityId)
+	{
+		$effectRows = DB::delete("DELETE FROM activity_join WHERE userId = ? AND activityId = ?"
+				, [$userId, $activityId]);
+		return count($effectRows) > 0;
+	}
+	
 	public function getUserPublishByPage($userId, $page)
 	{
 		$activitys = DB::select("SELECT activity.id, beginDate, beginTime, endDate, endTime, place,
