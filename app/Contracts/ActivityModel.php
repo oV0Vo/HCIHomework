@@ -34,4 +34,5 @@ interface ActivityModel
 
 	public function getDetail($activityId, $uid);
 
+	public function getAllCitys();
 }

@@ -163,4 +163,8 @@ class ActivityController extends Controller
 		}
 	}
 
+	public function getAllCitys(Request $request)
+	{
+		return $this->model->getAllCitys();
+	}
 }

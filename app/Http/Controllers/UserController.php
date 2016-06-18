@@ -27,6 +27,18 @@ class UserController extends Controller
         return view('userManage');
     }
 
+	public function modifyPassword(Request $request)
+	{
+		$oldPass = $request['oldPass'];
+		$newPass = $request['newPass'];
+		$uid = Session::get('uid');
+		if ($this->model->passwordEquals($uid, $oldPass)) {
+			return $this->mdoel->modifyPassword($uid, $newPass);
+		} else {
+			return false;
+		}
+	}
+
     public function search(Request $request)
     {
         $type = $request['type'];
@@ -206,7 +218,7 @@ class UserController extends Controller
             return $updateSuccess ? "true" : "false";
         }
     }
-	
+
 	public function userCenter(Request $reqeust)
 	{
 		// TODO:uid
@@ -215,12 +227,12 @@ class UserController extends Controller
 		$datas['user'] = $user;
         return view('userInfo', $datas);
 	}
-	
-	public function webModifyPassword() 
+
+	public function webModifyPassword()
 	{
 		return view('modifyPassword');
 	}
-	
+
 	public function test(Request $request) {
 		return view('newMain');
 	}

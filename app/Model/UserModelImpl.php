@@ -8,6 +8,25 @@ use App\Contracts\UserModel;
 
 class UserModelImpl implements UserModel
 {
+	
+	public function passwordEquals($uid, $password)
+	{
+		$rows = DB::select("SELECT true FROM account
+							WHERE userId = ? AND 
+								  password = MD5(?);", 
+							[$uid, $password]);
+		return count($rows) > 0;
+	}
+	
+	public function modifyPassword($uid, $newPassword)
+	{
+		$effectRows = DB::update("UPDATE account 
+								  SET password = MD5(?) 
+								  WHERE userId = ?", 
+								  [$newPassword, $uid]);
+		return count($effectRows) > 0;
+	}
+	
 	public function searchByNickname($nickname, $page)
 	{
 		$users = DB::select('SELECT id, avatar, nickname, sex, city, signature, role

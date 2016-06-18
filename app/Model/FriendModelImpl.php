@@ -23,12 +23,22 @@ class FriendModelImpl implements FriendModel
 	
 	public function getFriendBriefsByPage($userId, $page)
 	{
-		
 	}
 	
-	public function commentToFriend($content)
+	public function commentToFriend($uid, $friendId, $content)
 	{
-		
+		$effectedRows = DB::insert("INSERT IGNORE INTO friendcomment VALUES(?, ?, current_timestamp(),
+									?", [$friendId, $uid, $content]);
+		return count($effectedRows) > 0;
+	}
+	
+	public function getComments($uid, $page)
+	{
+		$comments = DB::select("SELECT * FROM friendcomment 
+								WHERE receiverId = ? 
+								LIMIT ?, ?", 
+								[$userId, $page * 10, ($page + 1) * 10]);
+		return $comments;
 	}
 	
 	public function getFreindBriefs($userId)

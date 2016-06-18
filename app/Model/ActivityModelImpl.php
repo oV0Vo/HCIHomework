@@ -206,4 +206,9 @@ class ActivityModelImpl implements ActivityModel
 
 		return array("activity" => $activity, "joinFriends" => $joinFriends);
 	}
+	
+	public function getAllCitys() 
+	{
+		return array("南京", "上海", "杭州");
+	}
 }
