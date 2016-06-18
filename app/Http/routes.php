@@ -55,6 +55,7 @@ Route::get('activity/getByCondition', ['middleware' => 'auth', 'uses' => 'Activi
 Route::get('activity/myActivity', ['middleware' => 'auth', 'uses' => 'ActivityController@getMyActivity']);
 Route::get('activity/publishActivity', ['middleware' => 'auth', 'uses' => 'ActivityController@publishActivity']);
 Route::get('activity/join', ['middleware' => 'auth', 'uses' => 'ActivityController@attendActivity']);
+Route::get('activity/cancelJoin', ['middleware' => 'auth', 'uses' => 'ActivityController@cancelAttendActivity']);
 Route::get('activity/getUserPublishByPage', ['middleware' => 'auth', 'uses' => 'ActivityController@getUserPublishByPage']);
 Route::get('activity/getUserJoinByPage', ['middleware' => 'auth', 'uses' => 'ActivityController@getUserJoinByPage']);
 Route::get('activity/delete', ['middleware' => 'auth', 'uses' => 'ActivityController@deleteActivity']);
