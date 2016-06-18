@@ -7,6 +7,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <link href="{{ URL::asset('css/main.css')}}" type="text/css" rel="stylesheet"/>
     <link href="{{ URL::asset('css/util.css')}}" type="text/css" rel="stylesheet"/>
+    <link href="{{ URL::asset('node_modules/bootstrap/dist/css/bootstrap.css')}}" type="text/css" rel="stylesheet"/>
+    <script src="{{ URL::asset('node_modules/bootstrap/dist/js/bootstrap.min.js')}}" type="text/javascript"></script>
     <script src="{{ URL::asset('js/jquery.js')}}" type="text/javascript"></script>
     @section('childCss')
     @show

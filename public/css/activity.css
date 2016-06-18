@@ -10,6 +10,15 @@
     width:680px;
 }
 
+#activityList {
+    width:680px;
+    padding: 10px
+}
+
+.activityHeader {
+    padding: 10px 10px 0 0
+}
+
 .lastColumn {
     padding-left:50px;
 }
@@ -77,5 +86,3 @@
 .actJoin {
     float:right;
 }
-
-

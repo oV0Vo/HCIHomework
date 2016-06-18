@@ -11,12 +11,12 @@ use App\Contracts\ActivityModel;
 
 class ActivityController extends Controller
 {
-	
+
 	public function __construct(ActivityModel $model)
 	{
 		$this->model = $model;
 	}
-	
+
     /**
      * Display a listing of the resource.
      *
@@ -26,27 +26,29 @@ class ActivityController extends Controller
     {
 		$city = $request['city'];
 		if(is_null($city))
-			$city = '南京';
+			$city = '上海';
 		$page = $request['page'];
 		if(is_null($page))
 			$page = 0;
 		$activitys = $this->model->getActivityByCondition($city, $page);
+		$hotActivitys = $activitys;
 		$datas['activitys'] = $activitys;
+		$datas['hotActivitys'] = $hotActivitys;
 		$datas['city'] = $city;
 		$datas['page'] = $page;
 		return view('activity', $datas);
     }
-	
+
 	public function getLatestActivity()
 	{
 		return 'getLatestActivity';
 	}
- 		
+
 	public function getHotActivity()
 	{
 		return 'getHotActivity';
 	}
- 		
+
 	public function getByCondition(Request $request)
 	{
 		$city = $request['city'];
@@ -57,7 +59,7 @@ class ActivityController extends Controller
 		$activitys = $this->model->getActivityByCondition($city, $page);
 		return $activitys;
 	}
- 		
+
 	public function getMyActivity()
 	{
 		return 'getMyActivity';
@@ -107,7 +109,7 @@ class ActivityController extends Controller
 		$request['isCommit'] = null;
 		return $this->publishActivity($request);
 	}
- 		
+
 	public function attendActivity(Request $request)
 	{
 		$actId = $request['id'];
@@ -129,7 +131,7 @@ class ActivityController extends Controller
 		$page = $request['page'];
 		return 'getUserJoinByPage';
 	}
- 		
+
 	public function deleteActivity(Request $request)
 	{
 		$id = intval($request['id']);
@@ -138,5 +140,5 @@ class ActivityController extends Controller
 			return $deleteSuccess? "true": "false";
 		}
 	}
- 	
+
 }
