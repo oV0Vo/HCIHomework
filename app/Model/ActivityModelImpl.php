@@ -121,11 +121,14 @@ class ActivityModelImpl implements ActivityModel
 		$prefetchPage = $page < 5? 10 - $page: 5;
 		$prefetchNum = ($page + $prefetchPage) * 10 + 1;
 		$activitys = DB::select("SELECT id, beginTime, duration, title, content, 
-								 joinNum, maxJoinNum, FALSE 
+								 joinNum, maxJoinNum 
 								 FROM activity
 								 WHERE beginTime + duration > current_timestamp()
 								 ORDER BY joinNum DESC LIMIT ?, ?", [$page * 10, $prefetchNum]);
 
+		$totalNum = count($activitys);
+		$leftPage = ($totalNum - 1)/ 10;
+		$activitys = array_slice($activitys, 0, 10);
 		$actCount = count($activitys);
 		if ($uid) {
 			for ($i=0; $i < $actCount; ++$i) {
@@ -140,9 +143,8 @@ class ActivityModelImpl implements ActivityModel
 			}
 		}
 
-		$leftPage = ($actCount - 1)/ 10;
 		
-		return array("activitys" => $activitys, "hasJoin" => $hasJoin, "joinFriends" => $joinFriends, "leftPage" => $leftPage);
+		return array("activitys" => $activitys, "hasJoins" => $hasJoins, "joinFriends" => $joinFriends, "leftPage" => $leftPage);
 	}
 	
 	public function search($key, $city, $orderType, $asc, $uid, $page) 
