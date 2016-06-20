@@ -117,6 +117,7 @@ class ActivityModelImpl implements ActivityModel
 	{
 		$activitys = array();
 		$joinFriends = array();
+		$hasJoins = array();
 		$prefetchPage = $page < 5? 10 - $page: 5;
 		$prefetchNum = ($page + $prefetchPage) * 10 + 1;
 			$activitys = DB::select("SELECT id, beginTime, duration, title, content, 
@@ -125,10 +126,9 @@ class ActivityModelImpl implements ActivityModel
 								 WHERE beginTime + duration > current_timestamp() 
 								 ORDER BY joinNum DESC LIMIT ?, ?", [$page * 10, $prefetchNum]);
 
-		$hasJoin = getHasJoin($activityId, $uid);
 		$actCount = count($activitys);
 		if ($uid) {
-			for ($i=0; $i < $actCount; ++$i)
+			for ($i=0; $i < $actCount; ++$i) {
 				$joinFriends[$i] = DB::select("SELECT id, avatar, nickname 
 											   FROM activity_join LEFT JOIN user 
 													ON (activity_join.userId = user.id) 
@@ -136,6 +136,8 @@ class ActivityModelImpl implements ActivityModel
 											   AND activity_join.userId <> ? 
 											   LIMIT 0, 10", 
 											   [$activitys[$i]->id, $uid]);
+				$hasJoins[$i] = $this->getHasJoin($activitys[$i]->id, $uid);
+			}
 		}
 		
 		$leftPage = ($actCount - 1)/ 10;
@@ -143,32 +145,42 @@ class ActivityModelImpl implements ActivityModel
 		return array("activitys" => $activitys, "hasJoin" => $hasJoin, "joinFriends" => $joinFriends, "leftPage" => $leftPage);
 	}
 	
-	public function search($key, $city, $orderType, $asc) 
+	public function search($key, $city, $orderType, $asc, $uid, $page) 
 	{
 		$order = $orderType == 0? 'beginTime': 'joinNum';
 		$order = $asc? $order.' ASC' : $order.' DESC';
+		$prefetchPage = $page < 5? 10 - $page: 5;
+		$prefetchNum = ($page + $prefetchPage) * 10 + 1;
 		$activitys = DB::select("SELECT id, beginTime, duration, title, content, 
-									    joinNum, maxJoinNum, !ISNULL(activity_join.userId) hasJoin 
+									    joinNum, maxJoinNum 
 								 FROM activity 
-								 	  LEFT JOIN activity_join ON(activity.id = activity_join.activityId) 
-								 WHERE city_crc = crc32(?) AND (title like '?' OR content like '?') 
+								 WHERE city_crc = crc32(?) AND (title like ? OR content like ?) 
 									   AND beginTime + duration > current_timestamp() 
-								 ORDER BY ?;", [$city, '%'.$key.'%', '%'.$key.'%', 
-								 $order]);
-		return $activitys;
+								 ORDER BY ? 
+								 LIMIT ?, ?;", [$city, '%'.$key.'%', '%'.$key.'%', $order, 
+								 $page * 10, $prefetchNum]);
+								 
+		$actCount = count($activitys);
+		$hasJoins = array();
+		if ($uid) {
+			for ($i=0; $i < $actCount; ++$i) {
+				$hasJoins[$i] = $this->getHasJoin($activitys[$i]->id, $uid);
+			}
+		}
+		return array("activitys" => $activitys, "hasJoins" => $hasJoins);
 	}
  
 	public function getDetail($activityId, $uid) 
 	{
 		$activitys = DB::select("SELECT activity.id id, authorId, user.nickname authorName, user.avatar authorAvatar, 
 											beginTime, duration, title, content, activity.city city, place, 
-											joinNum, maxJoinNum, false hasJoin
+											joinNum, maxJoinNum
 									 FROM activity 
 										LEFT JOIN activity_join ON(activity.id = activity_join.activityId) 
 										LEFT JOIN user ON(activity.authorId = user.id) 
 									 WHERE activity.id = ? 
 									 LIMIT 0, 1", [$activityId]);					
-		$hasJoin = getHasJoin($activityId, $uid);
+		$hasJoin = $this->getHasJoin($activityId, $uid);
 		$actCount = count($activitys);
 		$activity = null;
 		$joinFriends = null;
@@ -188,7 +200,7 @@ class ActivityModelImpl implements ActivityModel
 		return array("activity" => $activity, "hasJoin" => $hasJoin, "joinFriends" => $joinFriends);
 	}
 	
-	public function getHasJoin($activity, $uid) {
+	public function getHasJoin($activityId, $uid) {
 		if ($uid) {
 			$joins = DB::select("SELECT 1 FROM activity_join 
 						WHERE activityId = ? AND userId = ?;", 

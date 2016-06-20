@@ -26,7 +26,7 @@ class TestController extends Controller
 	 */
 	public function getIndex()
 	{
-		return $this->model->getDetail(12, 12);
+		return $this->model->search('马拉松', '上海', 0, false, 12, 0);
 	}
 	
 }
