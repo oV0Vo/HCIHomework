@@ -30,14 +30,26 @@ class ActivityController extends Controller
 		$page = $request['page'];
 		if(is_null($page))
 			$page = 0;
-		$activitys = $this->model->getActivityByCondition($city, $page);
-		$hotActivitys = $activitys;
+
+		if ($request['searchText']) {
+			$type = '搜索结果';
+			$key = $request['searchKey'];
+			$place = $request['place'];
+			$orderType = $request['orderType'];
+
+			$activitys = $this->model->search($key, $place, $orderType);
+		} else {
+			$type = '周边热门活动';
+			$activitys = $this->model->getActivityByCondition($city, $page);
+		}
+
+		$datas['type'] = $type;
 		$datas['activitys'] = $activitys;
-		$datas['hotActivitys'] = $hotActivitys;
 		$datas['city'] = $city;
 		$datas['page'] = $page;
 		return view('activity', $datas);
     }
+
 
 	public function getLatestActivity()
 	{
@@ -120,6 +132,16 @@ class ActivityController extends Controller
 		}
 	}
 
+	public function cancelAttendActivity(Request $request)
+	{
+		$actId = $request['id'];
+		if($actId) {
+			$userId = Session::get('userId');
+			$cancelAttentSuccess = $this->model->cancelAttend($userId, $actId);
+			return $cancelAttentSuccess ? "true": "false";
+		}
+	}
+
 	public function getUserPublishByPage(Request $request)
 	{
 		$page = $request['page'];
@@ -140,8 +162,8 @@ class ActivityController extends Controller
 			return $deleteSuccess? "true": "false";
 		}
 	}
-	
-	public function getAllCitys(Request $request) 
+
+	public function getAllCitys(Request $request)
 	{
 		return $this->model->getAllCitys();
 	}
