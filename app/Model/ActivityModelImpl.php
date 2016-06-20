@@ -168,47 +168,43 @@ class ActivityModelImpl implements ActivityModel
 
 	public function getDetail($activityId, $uid) 
 	{
-		if($uid) {
-			$activitys = DB::select("SELECT id, authorId, user.nickname authorName, user.avatar authorAvatar, 
-											beginTime, duration, title, content, city, place, 
-											joinNum, maxJoinNum, !ISNULL(activity_join.userId) hasJoin
-									 FROM activity 
-										LEFT JOIN activity_join ON(activity.id = activity_join.activityId) 
-										LEFT JOIN user ON(activity.authorId = user.id) 
-									 WHERE activity.id = ? AND activity_join.userId = ? 
-									 LIMIT 0, 1", [$activityId, $uid]);
-		} else {
-			$activitys = DB::select("SELECT id, authorId, user.nickname authorName, user.avatar authorAvatar, 
-											beginTime, duration, title, content, city, place, 
+		$activitys = DB::select("SELECT activity.id id, authorId, user.nickname authorName, user.avatar authorAvatar, 
+											beginTime, duration, title, content, activity.city city, place, 
 											joinNum, maxJoinNum, false hasJoin
 									 FROM activity 
 										LEFT JOIN activity_join ON(activity.id = activity_join.activityId) 
 										LEFT JOIN user ON(activity.authorId = user.id) 
 									 WHERE activity.id = ? 
-									 LIMIT 0, 1", [$activityId]);
+									 LIMIT 0, 1", [$activityId]);					
+		$hasJoin = false;
+		if($uid) {
+			$joins = DB::select("SELECT 1 FROM activity_join 
+						WHERE activityId = ? AND userId = ?;", 
+						[$activityId, $uid]);
+			$hasJoin = count($joins) != 0;
 		}
 	
 		$actCount = count($activitys);
-		$activity;
-		$joinFriends;
+		$activity = null;
+		$joinFriends = null;
 		if ($actCount != 0) {
 			$activity = $activitys[0];
 			if ($uid) {
-				$joinFriends = DB::select("SELECT id, avatar, nickname 
-											   FROM activity_join LEFT JOIN user 
-													ON (activity_join.userId = user.id) 
-											   WHERE activity_join.activityId = ? 
-											   AND activity_join.userId <> ? 
-											   LIMIT 0, 10", 
-											   [$activity->id, $uid]);
+				$joinFriends = DB::select("SELECT user.id id, avatar, nickname 
+											   FROM activity_join LEFT JOIN friend 
+												    ON(friend.friendId = activity_join.userId) 
+													LEFT JOIN user ON (friend.friendId = user.id) 
+											   WHERE activity_join.activityId = ? AND 
+											   friend.userId = ? ", 
+											   [$activityId, $uid]);
 			}
 		}
 		
-		return array("activity" => $activity, "joinFriends" => $joinFriends);
+		return array("activity" => $activity, "hasJoin" => $hasJoin, "joinFriends" => $joinFriends);
 	}
 	
 	public function getAllCitys() 
 	{
-		return array("南京", "上海", "杭州");
+		return array("南京", "上海", "杭州", "苏州", "无锡");
 	}
 }
