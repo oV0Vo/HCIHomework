@@ -116,8 +116,8 @@ class ActivityController extends Controller
 		$city = $request['city'];
 		$place = $request['place'];
 		$content = $request['content'];
-		$insertSuccess = $this->model->newActivity($userId, $beginDate, $beginTime, $endDate, $endTime, $city, $place,
-				$content);
+		/*$insertSuccess = $this->model->newActivity($userId, $beginDate, $beginTime, $endDate, $endTime, $city, $place,
+				$content);*/
 		$request['isCommit'] = null;
 		return $this->publishActivity($request);
 	}

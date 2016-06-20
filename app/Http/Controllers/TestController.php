@@ -26,7 +26,8 @@ class TestController extends Controller
 	 */
 	public function getIndex()
 	{
-		return $this->model->getHotActivity(0, 12);
+		echo $this->model->newActivity(12, 20160820080000, 7200, 640, 
+			'测试', '测试内容', '上海', '外滩');
 	}
 	
 }

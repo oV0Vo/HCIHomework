@@ -64,11 +64,13 @@ class ActivityModelImpl implements ActivityModel
 
 	}
 
-	public function newActivity($userId, $beginDate, $beginTime, $endDate, $endTime, $city, $place, $content)
+	public function newActivity($userId, $beginTime, $durationSeconds, $maxJoinNum, 
+			$title, $content, $city, $place)	
 	{
-		$result = DB::insert("INSERT INTO activity(authorId, beginDate, beginTime, endDate, endTime, city, city_crc,
-							  place, content) values(?,?,?,?,?,?,crc32(?), ?,?)", [$userId, $beginDate, $beginTime, $endDate,
-							$endTime, $city, $city, $place, $content]);
+		$result = DB::insert("INSERT INTO activity(title, authorId, city, city_crc,
+							  place, content, joinNum, maxJoinNum, beginTime, duration) 
+							  VALUES(?,?,?,CRC32(?),?,?, 0, ?, ?, ?)", [$title, $userId, $city, 
+							$city, $place, $content, $maxJoinNum, $beginTime, $durationSeconds]);
 		if($result > 0)
 			return true;
 		else

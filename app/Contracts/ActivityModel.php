@@ -15,9 +15,7 @@ interface ActivityModel
 	public function getActivityByCondition($city, $page);
 	
 	public function myActivity($userId);
-	
-	public function newActivity($userId, $beginDate, $beginTime, $endDate, $endTime, $city, $place, $content);
-	
+		
 	public function attendActivity($userId, $activityId);
 	
 	public function getUserPublishByPage($userId, $page);
@@ -35,4 +33,8 @@ interface ActivityModel
 	public function getDetail($activityId, $uid);
 
 	public function getAllCitys();
+	
+	public function newActivity($userId, $beginTime, $durationSeconds, $maxJoinNum, 
+			$title, $content, $city, $place);
+
 }
