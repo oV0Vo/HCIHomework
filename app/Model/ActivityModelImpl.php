@@ -119,21 +119,13 @@ class ActivityModelImpl implements ActivityModel
 		$joinFriends = array();
 		$prefetchPage = $page < 5? 10 - $page: 5;
 		$prefetchNum = ($page + $prefetchPage) * 10 + 1;
-		if($uid) {
-			$activitys = DB::select("SELECT id, beginTime, duration, title, content,
-								 joinNum, maxJoinNum, !ISNULL(activity_join.userId) hasJoin
-								 FROM activity 
-									  LEFT JOIN activity_join ON(activity.id = activity_join.activityId)
-								 WHERE beginTime + duration > current_timestamp() AND activity_join.userId = ? 
-								 ORDER BY joinNum DESC LIMIT ?, ?", [$uid, $page * 10, $prefetchNum]);
-		} else {
 			$activitys = DB::select("SELECT id, beginTime, duration, title, content, 
 								 joinNum, maxJoinNum, FALSE 
 								 FROM activity 
 								 WHERE beginTime + duration > current_timestamp() 
 								 ORDER BY joinNum DESC LIMIT ?, ?", [$page * 10, $prefetchNum]);
-		}
-	
+
+		$hasJoin = getHasJoin($activityId, $uid);
 		$actCount = count($activitys);
 		if ($uid) {
 			for ($i=0; $i < $actCount; ++$i)
@@ -148,7 +140,7 @@ class ActivityModelImpl implements ActivityModel
 		
 		$leftPage = ($actCount - 1)/ 10;
 		
-		return array("activitys" => $activitys, "joinFriends" => $joinFriends, "leftPage" => $leftPage);
+		return array("activitys" => $activitys, "hasJoin" => $hasJoin, "joinFriends" => $joinFriends, "leftPage" => $leftPage);
 	}
 	
 	public function search($key, $city, $orderType, $asc) 
@@ -165,7 +157,7 @@ class ActivityModelImpl implements ActivityModel
 								 $order]);
 		return $activitys;
 	}
-
+ 
 	public function getDetail($activityId, $uid) 
 	{
 		$activitys = DB::select("SELECT activity.id id, authorId, user.nickname authorName, user.avatar authorAvatar, 
@@ -176,14 +168,7 @@ class ActivityModelImpl implements ActivityModel
 										LEFT JOIN user ON(activity.authorId = user.id) 
 									 WHERE activity.id = ? 
 									 LIMIT 0, 1", [$activityId]);					
-		$hasJoin = false;
-		if($uid) {
-			$joins = DB::select("SELECT 1 FROM activity_join 
-						WHERE activityId = ? AND userId = ?;", 
-						[$activityId, $uid]);
-			$hasJoin = count($joins) != 0;
-		}
-	
+		$hasJoin = getHasJoin($activityId, $uid);
 		$actCount = count($activitys);
 		$activity = null;
 		$joinFriends = null;
@@ -201,6 +186,17 @@ class ActivityModelImpl implements ActivityModel
 		}
 		
 		return array("activity" => $activity, "hasJoin" => $hasJoin, "joinFriends" => $joinFriends);
+	}
+	
+	public function getHasJoin($activity, $uid) {
+		if ($uid) {
+			$joins = DB::select("SELECT 1 FROM activity_join 
+						WHERE activityId = ? AND userId = ?;", 
+						[$activityId, $uid]);
+			return count($joins) != 0;
+		} else {
+			return false;
+		}
 	}
 	
 	public function getAllCitys() 
