@@ -18,7 +18,7 @@ class FriendModelImpl implements FriendModel
 	{
 		$effectedRows = DB::insert("INSERT INTO friend VALUES(?, ?) ON DUPLICATE KEY UPDATE userId = userId;"
 				, [$userId, $friendId]);
-		return count($effectedRows) > 0;
+		return $effectedRows > 0;
 	}
 	
 	public function getFriendBriefsByPage($userId, $page)
@@ -29,16 +29,19 @@ class FriendModelImpl implements FriendModel
 	{
 		$effectedRows = DB::insert("INSERT IGNORE INTO friendcomment VALUES(?, ?, current_timestamp(),
 									?", [$friendId, $uid, $content]);
-		return count($effectedRows) > 0;
+		return ($effectedRows) > 0;
 	}
 	
 	public function getComments($uid, $page)
 	{
+		$prefetchPage = $page < 5? 10 - $page: 5;
+		$prefetchNum = ($page + $prefetchPage) * 10 + 1;
 		$comments = DB::select("SELECT * FROM friendcomment 
 								WHERE receiverId = ? 
 								LIMIT ?, ?", 
-								[$userId, $page * 10, ($page + 1) * 10]);
-		return $comments;
+								[$userId, $page * 10, $prefetchNum]);
+		$leftPage = (count($comment) - 1)/ 10;
+		return array("comments" => $comments, "leftPage" => $leftPage);
 	}
 	
 	public function getFreindBriefs($userId)

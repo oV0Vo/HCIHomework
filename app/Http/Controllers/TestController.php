@@ -14,7 +14,7 @@ use App\Contracts\FriendModel;
 class TestController extends Controller
 {
 
-	public function __construct(ActivityModel $model)
+	public function __construct(FriendModel $model)
 	{
 		$this->model = $model;
 	}
@@ -26,8 +26,7 @@ class TestController extends Controller
 	 */
 	public function getIndex()
 	{
-		echo $this->model->newActivity(12, 20160820080000, 7200, 640, 
-			'测试', '测试内容', '上海', '外滩');
+		echo $this->model->addFriend(12, 122);
 	}
 	
 }

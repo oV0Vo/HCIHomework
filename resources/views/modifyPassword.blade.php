@@ -17,13 +17,27 @@
 	</ul>
 	
 	<div class="contentPanel">
-    @section('content')
-    @show
+		<h2>密码修改</h2>
+		<form>
+		<span class="lineHead">旧密码</span><input id="oldPassword"type="text"><span id="oldPassHint"></span>
+		<br/>
+		<span class="lineHead">新密码</span><input id="newPassword"type="text">
+		<br/>
+		<span class="lineHead">密码确认</span><input id="newPassConfirm"type="text"><span id="newPassHint"></span>
+		<br/>
+		<br/>
+		<a class="btn btn-default" id="submit">更改密码</a>
+		</form>
+		
 	</div>
 </div>
 
 <script>
-	
+        $(document).ready(function () {
+            $("#signUpSummit").click(function () {
+				alert('更改密码');
+            });
+        })
 </script>
 
 @stop
