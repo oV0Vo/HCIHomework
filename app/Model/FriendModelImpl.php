@@ -36,11 +36,14 @@ class FriendModelImpl implements FriendModel
 	{
 		$prefetchPage = $page < 5? 10 - $page: 5;
 		$prefetchNum = ($page + $prefetchPage) * 10 + 1;
-		$comments = DB::select("SELECT * FROM friendcomment 
+		$comments = DB::select("SELECT user.id authorId, user.avatar authorAvatar, user.nickname authorNickname, 
+									   friendcomment.createTime commentTime, content
+								FROM friendcomment 
+									LEFT JOIN user ON(user.id = friendcomment.senderId) 
 								WHERE receiverId = ? 
 								LIMIT ?, ?", 
-								[$userId, $page * 10, $prefetchNum]);
-		$leftPage = (count($comment) - 1)/ 10;
+								[$uid, $page * 10, $prefetchNum]);
+		$leftPage = (int)((count($comments) - 1) / 10);
 		return array("comments" => $comments, "leftPage" => $leftPage);
 	}
 	

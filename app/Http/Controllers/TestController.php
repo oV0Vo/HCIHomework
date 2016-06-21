@@ -26,7 +26,7 @@ class TestController extends Controller
 	 */
 	public function getIndex()
 	{
-		echo $this->model->addFriend(12, 122);
+		return $this->model->getComments(12, 0);
 	}
 	
 }

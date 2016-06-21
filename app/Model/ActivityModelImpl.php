@@ -129,7 +129,7 @@ class ActivityModelImpl implements ActivityModel
 								 ORDER BY joinNum DESC LIMIT ?, ?", [$page * 10, $prefetchNum]);
 
 		$totalNum = count($activitys);
-		$leftPage = ($totalNum - 1)/ 10;
+		$leftPage = (int)(($totalNum - 1)/ 10);
 		$activitys = array_slice($activitys, 0, 10);
 		$actCount = count($activitys);
 		if ($uid) {
@@ -164,14 +164,19 @@ class ActivityModelImpl implements ActivityModel
 								 LIMIT ?, ?;", [$city, '%'.$key.'%', '%'.$key.'%', $order, 
 								 $page * 10, $prefetchNum]);
 								 
+		$totalNum = count($activitys);
+		$leftPage = (int)(($totalNum - 1)/ 10);
+		$activitys = array_slice($activitys, 0, 10);
 		$actCount = count($activitys);
+		
 		$hasJoins = array();
+		$leftPage = (int)(($totalNum - 1)/ 10);
 		if ($uid) {
 			for ($i=0; $i < $actCount; ++$i) {
 				$hasJoins[$i] = $this->getHasJoin($activitys[$i]->id, $uid);
 			}
 		}
-		return array("activitys" => $activitys, "hasJoins" => $hasJoins);
+		return array("activitys" => $activitys, "hasJoins" => $hasJoins, "leftPage" => $leftPage);
 	}
 
 	public function getDetail($activityId, $uid)

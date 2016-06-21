@@ -34,6 +34,8 @@
 			<span class="title2">生日</span>
 		</div>
 		
+		<textarea name="" id="" cols="30" rows="10"></textarea>
+		
         <div id="editContainer">
             <button class="btn btn-default" id="edit">编辑</button>
             <button class="btn btn-default" id="cancel">取消</button>
