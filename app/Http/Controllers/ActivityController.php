@@ -11,12 +11,12 @@ use App\Contracts\ActivityModel;
 
 class ActivityController extends Controller
 {
-	
+
 	public function __construct(ActivityModel $model)
 	{
 		$this->model = $model;
 	}
-	
+
     /**
      * Display a listing of the resource.
      *
@@ -26,27 +26,41 @@ class ActivityController extends Controller
     {
 		$city = $request['city'];
 		if(is_null($city))
-			$city = '南京';
+			$city = '上海';
 		$page = $request['page'];
 		if(is_null($page))
 			$page = 0;
-		$activitys = $this->model->getActivityByCondition($city, $page);
+
+		if ($request['searchText']) {
+			$type = '搜索结果';
+			$key = $request['searchKey'];
+			$place = $request['place'];
+			$orderType = $request['orderType'];
+
+			$activitys = $this->model->search($key, $place, $orderType);
+		} else {
+			$type = '周边热门活动';
+			$activitys = $this->model->getActivityByCondition($city, $page);
+		}
+
+		$datas['type'] = $type;
 		$datas['activitys'] = $activitys;
 		$datas['city'] = $city;
 		$datas['page'] = $page;
 		return view('activity', $datas);
     }
-	
+
+
 	public function getLatestActivity()
 	{
 		return 'getLatestActivity';
 	}
- 		
+
 	public function getHotActivity()
 	{
 		return 'getHotActivity';
 	}
- 		
+
 	public function getByCondition(Request $request)
 	{
 		$city = $request['city'];
@@ -57,7 +71,7 @@ class ActivityController extends Controller
 		$activitys = $this->model->getActivityByCondition($city, $page);
 		return $activitys;
 	}
- 		
+
 	public function getMyActivity()
 	{
 		return 'getMyActivity';
@@ -102,12 +116,12 @@ class ActivityController extends Controller
 		$city = $request['city'];
 		$place = $request['place'];
 		$content = $request['content'];
-		$insertSuccess = $this->model->newActivity($userId, $beginDate, $beginTime, $endDate, $endTime, $city, $place,
-				$content);
+		/*$insertSuccess = $this->model->newActivity($userId, $beginDate, $beginTime, $endDate, $endTime, $city, $place,
+				$content);*/
 		$request['isCommit'] = null;
 		return $this->publishActivity($request);
 	}
- 		
+
 	public function attendActivity(Request $request)
 	{
 		$actId = $request['id'];
@@ -115,6 +129,16 @@ class ActivityController extends Controller
 			$userId = Session::get('userId');
 			$attentSuccess = $this->model->attendActivity($userId, $actId);
 			return $attentSuccess ? "true": "false";
+		}
+	}
+
+	public function cancelAttendActivity(Request $request)
+	{
+		$actId = $request['id'];
+		if($actId) {
+			$userId = Session::get('userId');
+			$cancelAttentSuccess = $this->model->cancelAttend($userId, $actId);
+			return $cancelAttentSuccess ? "true": "false";
 		}
 	}
 
@@ -129,7 +153,7 @@ class ActivityController extends Controller
 		$page = $request['page'];
 		return 'getUserJoinByPage';
 	}
- 		
+
 	public function deleteActivity(Request $request)
 	{
 		$id = intval($request['id']);
@@ -138,5 +162,9 @@ class ActivityController extends Controller
 			return $deleteSuccess? "true": "false";
 		}
 	}
- 	
+
+	public function getAllCitys(Request $request)
+	{
+		return $this->model->getAllCitys();
+	}
 }

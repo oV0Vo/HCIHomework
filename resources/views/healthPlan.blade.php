@@ -1,7 +1,5 @@
-@extends('main')
-@section('childCss')
-    <link href="{{ URL::asset('css/healthPlan.css')}}" type="text/css" rel="stylesheet"/>
-    @stop
+@extends('main2')
+
 @section('realContent')
     <div class="title">进行中的计划</div>
     <?php

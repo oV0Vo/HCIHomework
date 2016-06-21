@@ -55,9 +55,11 @@ Route::get('activity/getByCondition', ['middleware' => 'auth', 'uses' => 'Activi
 Route::get('activity/myActivity', ['middleware' => 'auth', 'uses' => 'ActivityController@getMyActivity']);
 Route::get('activity/publishActivity', ['middleware' => 'auth', 'uses' => 'ActivityController@publishActivity']);
 Route::get('activity/join', ['middleware' => 'auth', 'uses' => 'ActivityController@attendActivity']);
+Route::get('activity/cancelJoin', ['middleware' => 'auth', 'uses' => 'ActivityController@cancelAttendActivity']);
 Route::get('activity/getUserPublishByPage', ['middleware' => 'auth', 'uses' => 'ActivityController@getUserPublishByPage']);
 Route::get('activity/getUserJoinByPage', ['middleware' => 'auth', 'uses' => 'ActivityController@getUserJoinByPage']);
 Route::get('activity/delete', ['middleware' => 'auth', 'uses' => 'ActivityController@deleteActivity']);
+Route::get('activity/getAllCitys', 'ActivityController@getAllCitys');
 
 Route::get('setting', ['middleware' => 'auth', 'uses' => 'SettingController@getIndex']);
 Route::get('setting/update', ['middleware' => 'auth', 'uses' => 'SettingController@update']);
@@ -89,3 +91,7 @@ Route::get('signUp', 'UserController@signUp');
 Route::get('signUp/redirect', 'UserController@signUpRedirect');
 
 Route::get('test', 'TestController@getIndex');
+Route::get('logout', 'UserController@exitLogin');
+Route::get('userCenter/info', 'UserController@userCenter');
+Route::get('userCenter/modifyPassword', 'UserController@webModifyPassword');
+Route::post('userCenter/modifyPassword', 'UserController@modifyPassword');

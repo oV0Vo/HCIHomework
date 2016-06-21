@@ -27,6 +27,18 @@ class UserController extends Controller
         return view('userManage');
     }
 
+	public function modifyPassword(Request $request)
+	{
+		$oldPass = $request['oldPass'];
+		$newPass = $request['newPass'];
+		$uid = Session::get('uid');
+		if ($this->model->passwordEquals($uid, $oldPass)) {
+			return $this->mdoel->modifyPassword($uid, $newPass);
+		} else {
+			return false;
+		}
+	}
+
     public function search(Request $request)
     {
         $type = $request['type'];
@@ -113,9 +125,11 @@ class UserController extends Controller
         $account = $request['account'];
         $password = $request['password'];
         if ($account && $password) {
-            $id = $this->model->getUserId($account, $password);
-            if (!is_null($id)) {
-                Session::put('userId', $id);
+            $userInfo = $this->model->getUserLoginInfo($account, $password);
+            if ($userInfo) {
+                Session::put('uid', $userInfo->userId);
+				Session::put('nickname', $userInfo->nickname);
+				Session::put('avatar', $userInfo->avatar);
                 return 'true';
             } else {
                 return 'false';
@@ -187,7 +201,9 @@ class UserController extends Controller
 
     public function exitLogin(Request $request)
     {
-        Session::forget('userId');
+        Session::forget('uid');
+        Session::forget('nickname');
+        Session::forget('avatar');
         return view('login');
     }
 
@@ -202,4 +218,22 @@ class UserController extends Controller
             return $updateSuccess ? "true" : "false";
         }
     }
+
+	public function userCenter(Request $reqeust)
+	{
+		// TODO:uid
+		$uid = 1;//Session::get('uid');
+		$user = $this->model->getUserDetail($uid)[0];
+		$datas['user'] = $user;
+        return view('userInfo', $datas);
+	}
+
+	public function webModifyPassword()
+	{
+		return view('modifyPassword');
+	}
+
+	public function test(Request $request) {
+		return view('newMain');
+	}
 }
