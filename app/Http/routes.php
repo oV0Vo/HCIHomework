@@ -89,9 +89,18 @@ Route::get('exitLogin', ['middleware' => 'auth', 'uses' => 'UserController@exitL
 Route::get('signUpIndex', 'UserController@signUpIndex');
 Route::get('signUp', 'UserController@signUp');
 Route::get('signUp/redirect', 'UserController@signUpRedirect');
-
-Route::get('test', 'TestController@getIndex');
 Route::get('logout', 'UserController@exitLogin');
-Route::get('userCenter/info', 'UserController@userCenter');
-Route::get('userCenter/modifyPassword', 'UserController@webModifyPassword');
-Route::post('userCenter/modifyPassword', 'UserController@modifyPassword');
+
+//页面测试使用的导航
+Route::get('test', 'TestController@getIndex');
+
+//个人中心导航
+Route::get('userCenter/info', ['middleware' => 'auth', 'uses' => 'UserController@userCenter']);
+Route::get('userCenter/modifyPassword', ['middleware' => 'auth', 'uses' => 'UserController@webModifyPassword']);
+Route::post('userCenter/modifyPassword', ['middleware' => 'auth', 'uses' => 'UserController@modifyPassword']);
+Route::get('userCenter/comment', ['middleware' => 'auth', 'uses' => 'UserController@myReceiveComment']);
+Route::get('userCenter/myConcern', ['middleware' => 'auth', 'uses' => 'UserController@myConcern']);
+Route::get('userCenter/myFan', ['middleware' => 'auth', 'uses' => 'UserController@myFan']);
+Route::get('user', 'UserController@webUser');
+
+

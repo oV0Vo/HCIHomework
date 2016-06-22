@@ -15,4 +15,8 @@ interface FriendModel
 	public function getComments($uid, $page);
 	
 	public function getFreindBriefs($userId);
+
+	public function getUserConcerns($uid, $page, $asc);
+
+	public function getUserFans($uid, $page, $asc);
 }

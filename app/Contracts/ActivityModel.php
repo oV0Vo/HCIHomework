@@ -37,4 +37,8 @@ interface ActivityModel
 	public function newActivity($userId, $beginTime, $durationSeconds, $maxJoinNum, 
 			$title, $content, $city, $place);
 
+	public function getUserPublish($uid, $page);
+
+	public function getUserAttend($uid, $page);
+
 }

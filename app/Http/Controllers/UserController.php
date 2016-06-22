@@ -8,14 +8,16 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Contracts\UserModel;
+use App\Contracts\FriendModel;
 
 class UserController extends Controller
 {
 
-    public function __construct(UserModel $model)
+    public function __construct(UserModel $model, FriendModel $friendModel)
     {
         $this->model = $model;
-    }
+		$this->friendModel = $friendModel;
+	}
 
     /**
      * Display a listing of the resource.
@@ -233,7 +235,32 @@ class UserController extends Controller
 		return view('modifyPassword');
 	}
 
-	public function test(Request $request) {
-		return view('newMain');
+	public function myReceiveComment()
+	{
+		return view('comment', $this->friendModel->getComments(Session::get('uid'), $request['page']));
+	}
+		
+	public function myConcern()
+	{
+		$page = $request['page'];
+		$asc = $request['asc'];
+		return view('myConcern', $this->friendModel->getUserConcerns(Session::get('uid'), 
+			$page, $asc));
+	}
+			
+	public function myFan()
+	{
+		$page = $request['page'];
+		$asc = $request['asc'];
+		return view('myConcern', $this->friendModel->getUserFans(Session::get('uid'), 
+			$page, $asc));
+	}
+	
+	public function webUser(Request $request) {
+		$userId = $request['id'];
+		$uid = Session::get('uid');
+		if () {
+			
+		}
 	}
 }

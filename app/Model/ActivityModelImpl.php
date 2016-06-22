@@ -120,13 +120,15 @@ class ActivityModelImpl implements ActivityModel
 		$activitys = array();
 		$joinFriends = array();
 		$hasJoins = array();
+		$perPageNum = 10;
+		$fetchFrom = $page * $perPageNum;
 		$prefetchPage = $page < 5? 10 - $page: 5;
-		$prefetchNum = ($page + $prefetchPage) * 10 + 1;
+		$fetchNum = $prefetchPage * $perPageNum + 1;
 		$activitys = DB::select("SELECT id, beginTime, duration, title, content, 
 								 joinNum, maxJoinNum 
 								 FROM activity
 								 WHERE beginTime + duration > current_timestamp()
-								 ORDER BY joinNum DESC LIMIT ?, ?", [$page * 10, $prefetchNum]);
+								 ORDER BY joinNum DESC LIMIT ?, ?", [$fetchFrom, $fetchNum]);
 
 		$totalNum = count($activitys);
 		$leftPage = (int)(($totalNum - 1)/ 10);
@@ -153,8 +155,10 @@ class ActivityModelImpl implements ActivityModel
 	{
 		$order = $orderType == 0? 'beginTime': 'joinNum';
 		$order = $asc? $order.' ASC' : $order.' DESC';
+		$perPageNum = 10;
+		$fetchFrom = $page * $perPageNum;
 		$prefetchPage = $page < 5? 10 - $page: 5;
-		$prefetchNum = ($page + $prefetchPage) * 10 + 1;
+		$fetchNum = $prefetchPage * $perPageNum + 1;
 		$activitys = DB::select("SELECT id, beginTime, duration, title, content, 
 									    joinNum, maxJoinNum 
 								 FROM activity 
@@ -162,7 +166,7 @@ class ActivityModelImpl implements ActivityModel
 									   AND beginTime + duration > current_timestamp() 
 								 ORDER BY ? 
 								 LIMIT ?, ?;", [$city, '%'.$key.'%', '%'.$key.'%', $order, 
-								 $page * 10, $prefetchNum]);
+								 $fetchFrom, $fetchNum]);
 								 
 		$totalNum = count($activitys);
 		$leftPage = (int)(($totalNum - 1)/ 10);
@@ -223,5 +227,42 @@ class ActivityModelImpl implements ActivityModel
 	public function getAllCitys() 
 	{
 		return array("南京", "上海", "杭州", "苏州", "无锡");
+	}
+	
+	public function getUserPublish($uid, $page) 
+	{
+		$perPageNum = 10;
+		$fetchFrom = $page * $perPageNum;
+		$prefetchPage = $page < 5? 10 - $page: 5;
+		$fetchNum = $prefetchPage * $perPageNum + 1;
+		$activitys = DB::select("SELECT id, beginTime, duration, title, content, 
+									    joinNum, maxJoinNum 
+								 FROM activity 
+								 WHERE authorId = ? 
+								 LIMIT ?, ?;", [$uid, $fetchFrom, $fetchNum]);
+		$totalNum = count($activitys);
+		$leftPage = (int)(($totalNum - 1)/ 10);
+		$activitys = array_slice($activitys, 0, 10);
+		$actCount = count($activitys);
+		return array("activitys" => $activitys, "leftPage" => $leftPage);
+	}
+	
+	public function getUserAttend($uid, $page)
+	{
+		$perPageNum = 10;
+		$fetchFrom = $page * $perPageNum;
+		$prefetchPage = $page < 5? 10 - $page: 5;
+		$fetchNum = $prefetchPage * $perPageNum + 1;
+		$activitys = DB::select("SELECT id, beginTime, duration, title, content, 
+									    joinNum, maxJoinNum 
+								 FROM activity_join LEFT JOIN activity 
+									ON(activity.id = activity_join.activityId) 
+								 WHERE activity_join.userId = ? 
+								 LIMIT ?, ?;", [$uid, $fetchFrom, $fetchNum]);
+		$totalNum = count($activitys);
+		$leftPage = (int)(($totalNum - 1)/ 10);
+		$activitys = array_slice($activitys, 0, 10);
+		$actCount = count($activitys);
+		return array("activitys" => $activitys, "leftPage" => $leftPage);
 	}
 }

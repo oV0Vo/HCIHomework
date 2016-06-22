@@ -14,7 +14,7 @@ use App\Contracts\FriendModel;
 class TestController extends Controller
 {
 
-	public function __construct(FriendModel $model)
+	public function __construct(ActivityModel $model)
 	{
 		$this->model = $model;
 	}
@@ -24,9 +24,9 @@ class TestController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function getIndex()
+	public function getIndex(Request $request)
 	{
-		return $this->model->getComments(12, 0);
+		return $this->model->getUserAttend(13, 19);
 	}
 	
 }
