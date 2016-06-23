@@ -22,8 +22,8 @@ interface HealthDataModel
 	
 	public function getSleepData($uid, $fromDate, $toDate);
 	
-	public function getSleepDate($uid, $fromDate, $toDate);
-	
+	public function getSleepData($uid, $fromDate, $toDate, $page);
+		
 	public function getTotalStats($uid);
 	
 	public function getTotalSportData($uid);

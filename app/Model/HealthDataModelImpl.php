@@ -134,17 +134,46 @@ class HealthDataModelImpl implements HealthDataModel
 	}	
 	
 	public function getFirstTenFanRank($uid) 
-	{
-		
+	{ 
+		$data = DB::select("SELECT user.id uid, avatar, nickname, rank 
+							 FROM friend 
+								LEFT JOIN sport_rank ON(sport_rank.uid = friend.userId) 
+							 WHERE friend.friendId = ? 
+							 ORDER BY rank ASC 
+							 LIMIT 0, 10", [$uid]);
+		return $this->mergeMyRank($ranks, $uid);
 	}
 	
 	public function getFirstTenConcernRank($uid) 
 	{
-		
+		$ranks = DB::select("SELECT user.id uid, avatar, nickname, rank 
+							 FROM friend 
+								LEFT JOIN sport_rank ON(sport_rank.uid = friend.friendId) 
+							 WHERE friend.userId = ? 
+							 ORDER BY rank ASC 
+							 LIMIT 0, 10", [$uid]);
+		return $this->mergeMyRank($ranks, $uid);
+	}
+	
+	private function mergeMyRank($ranks, $uid) 
+	{
+		$myRank = $this->getUserRank($uid);
+		$data = array_merge($data, $myRank);
+		$data = usort($data, function($a, $b) {
+			return $a->rank > $b->rank;});
+		$data = array_slice($data, 0, 10);
+		return $data;
+	}
+	
+	private function getUserRank($uid) {
+		$myRank = DB::select("SELECT uid, avatar, nickname, rank 
+							  FROM sport_rank 
+							  WHERE uid = ?", [$uid]);
+		return $myRank;
 	}
 	
 	public function getTotalRank($uid) 
 	{
-		
+		return $this->getUserRank($uid);
 	}
 }

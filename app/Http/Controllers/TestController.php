@@ -8,13 +8,13 @@ use DB;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Contracts\ActivityModel;
+use App\Contracts\HealthDataModel;
 use App\Contracts\FriendModel;
 
 class TestController extends Controller
 {
 
-	public function __construct(ActivityModel $model)
+	public function __construct(HealthDataModel $model)
 	{
 		$this->model = $model;
 	}
@@ -26,9 +26,12 @@ class TestController extends Controller
 	 */
 	public function getIndex(Request $request)
 	{
-		$a1 = array("hehe"=>1);
-		$a2 = array("haha"=>2);
-		return array_merge($a1, $a2);
+		/*$a1 = array("hehe"=>1);
+		$a2 = array("hehe"=>2);
+		$a3 = array("hehe"=>3);
+		$ar = array($a2, $a1, $a3);*/
+		return $this->model->getFirstTenFanRank(12);
+		//return array($a2, $a1, $a3);
 	}
 	
 }
