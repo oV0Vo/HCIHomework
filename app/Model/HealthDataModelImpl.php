@@ -81,7 +81,7 @@ class HealthDataModelImpl implements HealthDataModel
 		return array("sportDatas" => $sportDatas, "leftPage" => $leftPage);
 	}
 	
-	public function getSleepData($uid, $date)
+	public function getOneDaySleepData($uid, $date)
 	{
 		$data = DB::select("SELECT recordDate, fromTime, toTime, 
 								   totalMinute, shallowSleepMinute, deepSleepMinute 
@@ -102,7 +102,7 @@ class HealthDataModelImpl implements HealthDataModel
 		return $data;
 	}
 	
-	public function getSleepData($uid, $fromDate, $toDate, $page)
+	public function getPageSleepData($uid, $fromDate, $toDate, $page)
 	{
 		$perPageNum = 10;
 		$fetchFrom = $page * $perPageNum;
@@ -135,9 +135,10 @@ class HealthDataModelImpl implements HealthDataModel
 	
 	public function getFirstTenFanRank($uid) 
 	{ 
-		$data = DB::select("SELECT user.id uid, avatar, nickname, rank 
+		$ranks = DB::select("SELECT user.id uid, avatar, nickname, rank 
 							 FROM friend 
 								LEFT JOIN sport_rank ON(sport_rank.uid = friend.userId) 
+								LEFT JOIN user ON (friend.friendId = user.id) 
 							 WHERE friend.friendId = ? 
 							 ORDER BY rank ASC 
 							 LIMIT 0, 10", [$uid]);
@@ -149,6 +150,7 @@ class HealthDataModelImpl implements HealthDataModel
 		$ranks = DB::select("SELECT user.id uid, avatar, nickname, rank 
 							 FROM friend 
 								LEFT JOIN sport_rank ON(sport_rank.uid = friend.friendId) 
+								LEFT JOIN user ON (friend.friendId = user.id)
 							 WHERE friend.userId = ? 
 							 ORDER BY rank ASC 
 							 LIMIT 0, 10", [$uid]);
@@ -158,16 +160,17 @@ class HealthDataModelImpl implements HealthDataModel
 	private function mergeMyRank($ranks, $uid) 
 	{
 		$myRank = $this->getUserRank($uid);
-		$data = array_merge($data, $myRank);
-		$data = usort($data, function($a, $b) {
+		$ranks = array_merge($ranks, $myRank);
+		usort($ranks, function($a, $b) {
 			return $a->rank > $b->rank;});
-		$data = array_slice($data, 0, 10);
-		return $data;
+		$ranks = array_slice($ranks, 0, 10);
+		return $ranks;
 	}
 	
 	private function getUserRank($uid) {
 		$myRank = DB::select("SELECT uid, avatar, nickname, rank 
 							  FROM sport_rank 
+							  LEFT JOIN user ON(sport_rank.uid = user.id)
 							  WHERE uid = ?", [$uid]);
 		return $myRank;
 	}
