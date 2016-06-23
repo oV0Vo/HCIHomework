@@ -1,0 +1,19 @@
+#userInfoPanel {
+	padding: 50px 0 50px 0;
+	width: 100%;
+	background-color:#ADADAD
+}
+
+#nickname {
+	margin: 6px 0;
+	font-size:20px;
+	font-color:#000;
+}
+
+#signature {
+	margin: 6px 0;
+}
+
+#concern {
+	margin: 10px 0;
+}

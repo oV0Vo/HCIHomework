@@ -265,4 +265,41 @@ class ActivityModelImpl implements ActivityModel
 		$actCount = count($activitys);
 		return array("activitys" => $activitys, "leftPage" => $leftPage);
 	}
+	
+	public function getSportGoal($uid) 
+	{
+		
+	}
+	
+	public function setSportGoal($uid, $distance, $calories, $step)
+	{
+		
+	}
+	
+	public function getSportData($uid, $fromDate, $toDate, $page)
+	{
+		
+	}
+	
+	public function getTotalSportData($uid)
+	{
+		
+	}
+	
+	public function getSleepData($uid, $date)
+	{
+		
+	}
+	
+	public function getSleepDate($uid, $fromDate, $toDate)
+	{
+		
+	}
+	
+	public function getSleepDate($uid, $fromDate, $toDate)
+	{
+		
+	}
+	
+	
 }

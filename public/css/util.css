@@ -17,6 +17,16 @@
     border-radius: 24px;
 }
 
+.img-round-big{
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+}
+
+.centerItem {
+	margin: 0 auto;
+}
+
 .lineItem {
 	padding: 10px;
 }

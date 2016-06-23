@@ -13,10 +13,11 @@ use App\Contracts\FriendModel;
 class UserController extends Controller
 {
 
-    public function __construct(UserModel $model, FriendModel $friendModel)
+    public function __construct(UserModel $model, FriendModel $friendModel, ActivityModel $activityModel)
     {
         $this->model = $model;
 		$this->friendModel = $friendModel;
+		$this->activityModel = $activityModel;
 	}
 
     /**
@@ -256,11 +257,25 @@ class UserController extends Controller
 			$page, $asc));
 	}
 	
-	public function webUser(Request $request) {
+	public function webUserAttend(Request $request) {
+		$user = $this->getUserWithConcernState($request);
+		$activitys = $this->activityModel->getUserAttend($uid, $page);
+		return view('userAttentAct', array_merge($user, $activitys));
+	}
+	
+	public function webUserPublish(Request $request) {
+		$user = $this->getUserWithConcernState($request);
+		$activitys = $this->activityModel->getUserPublish($uid, $page);
+		return view('userPublishAct', array_merge($user, $activitys));
+	}
+	
+	private function getUserWithConcernState(Request $request) {
 		$userId = $request['id'];
 		$uid = Session::get('uid');
-		if () {
-			
-		}
+		$page = $request['page'];
+		if (!isset($page))
+			$page = 0;
+		$user = $this->model->getDetailWithConcernState($userId, $uid);
+		return $user;
 	}
 }

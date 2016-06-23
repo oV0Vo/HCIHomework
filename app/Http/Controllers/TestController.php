@@ -26,7 +26,9 @@ class TestController extends Controller
 	 */
 	public function getIndex(Request $request)
 	{
-		return $this->model->getUserAttend(13, 19);
+		$a1 = array("hehe"=>1);
+		$a2 = array("haha"=>2);
+		return array_merge($a1, $a2);
 	}
 	
 }

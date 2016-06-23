@@ -142,5 +142,17 @@ class UserModelImpl implements UserModel
 		else
 			return null;
 	}
-
+	
+	public function getDetailWithConcernState($userId, $uid)
+	{
+		$user = DB::select("SELECT id, sex, city, avatar, nickname, signature 
+							FROM user 
+							WHERE id = ?", [$userId]);
+		$hasConcern = false;
+		if ($uid)
+			$hasConcern = count(DB::select("SELECT true
+											FROM friend 
+											WHERE friendId = ? AND userId = ?"), [$userId, $uid]);
+		return array("user" => $user, "hasConcern" => $hasConcern);
+	}		
 }

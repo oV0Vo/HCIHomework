@@ -35,4 +35,6 @@ interface UserModel
 	public function getRoleAndCity($id);
 	
 	public function getUserLoginInfo($account, $password);
+	
+	public function getDetailWithConcernState($userId, $uid);
 }

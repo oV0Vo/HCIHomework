@@ -101,6 +101,6 @@ Route::post('userCenter/modifyPassword', ['middleware' => 'auth', 'uses' => 'Use
 Route::get('userCenter/comment', ['middleware' => 'auth', 'uses' => 'UserController@myReceiveComment']);
 Route::get('userCenter/myConcern', ['middleware' => 'auth', 'uses' => 'UserController@myConcern']);
 Route::get('userCenter/myFan', ['middleware' => 'auth', 'uses' => 'UserController@myFan']);
-Route::get('user', 'UserController@webUser');
-
+Route::get('user', 'UserController@webUserAttend');
+Route::get('userJoin', 'UserController@wbeUserJoin');
 
